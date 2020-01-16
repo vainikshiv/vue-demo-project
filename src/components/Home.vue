@@ -12,31 +12,25 @@ export default {
            info: null
         }      
     },
-    async mounted() {
-        // const config = {
-        //     "Content-Type": "application/json"
-           
-        // }
-        // await axios.post("https://myerp.sjain.io/api/method/login",{usr:"administrator", pwd:"Sjain@123"},{headers: config})
-        // .then(response => {
-        //     // this.info = response            
-        //     console.log(response)
-        //     })
-        // .catch(errors => {
-        //     this.info = errors
-        //     console.log(errors)
-        // }) 
-
-
-    //     var d = await axios.post("https://myerp.sjain.io/api/method/login",{usr:"administrator", pwd:"Sjain@123"},{headers: config})
-    //   console.log(d)
-         var b = await axios.get("https://myerp.sjain.io/api/resource/Employee")
-      console.log(b)
+    mounted() {
+        const config = {
+            'Accept': 'application/json',
+            "Content-Type": "application/json",
+            
+        }
+     
+         console.log(this.$cookies.get('sid'))
+         axios.get("https://myerp.sjain.io/api/resource/User",{headers: config})
+         .then(response => {
+            console.log(response)
+         })
+      
+       console.log('Redirect to homepage')
     }
 }
 </script>
 
 <style scoped>
- 
-
+  
+  
 </style>

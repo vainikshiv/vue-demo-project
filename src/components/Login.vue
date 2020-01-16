@@ -53,22 +53,31 @@ export default {
       }
     },
    methods: {
-      login: async function () {
+      login: function () {
         let email = this.email 
         let password = this.password
         const config = {
-            "Content-Type": "application/json"          
+           'Accept': 'application/json',
+           'Content-Type': 'application/json',          
         }
-        await axios.post("https://myerp.sjain.io/api/method/login",{usr:email, pwd:password},{headers: config})
+       axios.post("https://myerp.sjain.io/api/method/login",{usr:email, pwd:password},{headers: config})
         .then(response => {
-            // this.info = response           
-            console.log(response)
-            this.$router.push('/')
-            })
+              if (response.status == 200){
+                console.log(response)
+                let d = new Date();                
+                d.setTime(d.getTime() + (1*24*60*60*1000));
+                let expires = "expires="+ d.toUTCString();
+                
+                this.$cookies.set('sid', '05d8d46aaebff1c87a90f570a3ff1c0f570a3ff1c87a90f56bacd4', expires,{domain: 'myerp.sjain.io'} )
+                // $cookies.set(keyName, value[, expireTimes[, path[, domain[, secure]]]])
+                this.$router.push('/')
+              }                    
+          })
         .catch(errors => {
             // this.info = errors
             console.log(errors)
         }) 
+       
         // this.$store.dispatch('login', { email, password })
       //  .then(() => this.$router.push('/'))
     //    .catch(err => console.log(err))
@@ -80,7 +89,7 @@ export default {
 <style scoped>
     .login-form {
       box-shadow: 3px 3px 3px 1px;
-
+      margin-top:20%;
     }
     .header {
        text-align: left;
@@ -89,4 +98,5 @@ export default {
     body {
       background-color: antiquewhite;
     }
+
 </style>

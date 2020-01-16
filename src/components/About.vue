@@ -69,12 +69,20 @@ export default {
         ]
       }
     },
-    async mounted() {
+    mounted() {
         const config = {
-            "Content-Type": "application/json"           
+            'Accept': 'application/json',
+            "Content-Type": "application/json",
+            "sid": "token "+this.$cookies.get('sid'),           
         }
-        var a = await axios.get("https://myerp.sjain.io/api/resource/User",{headers: config})
-        console.log(a)
+        axios.get("https://myerp.sjain.io/api/resource/User",{headers: config})
+        .then(response => {
+            console.log(response)
+        })
+        .catch(errors => {
+            console.log(errors)
+        })
+        
         // document.write(a.data)
     }
 }

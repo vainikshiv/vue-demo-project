@@ -33,7 +33,7 @@
                     <em>User</em>
                 </template>
                 <b-dropdown-item href="#">Profile</b-dropdown-item>
-                <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                <b-dropdown-item href="#" @click="logout()">Sign Out</b-dropdown-item>
                 </b-nav-item-dropdown>
             </b-navbar-nav>
             </b-collapse>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+const axios = require('axios');
 export default {
     name: 'Navbar',
     data() {
@@ -53,6 +54,21 @@ export default {
         onChange(event){
             this.status = event
             console.log(event)
+        },
+        logout() {
+        const config = {
+            'Accept': 'application/json',
+            "Content-Type": "application/json",        
+        }
+        axios.get("https://myerp.sjain.io/api/method/logout",{headers: config})
+        .then(response => {
+            console.log(response)
+            this.$router.push('/login')
+            this.$cookies.remove('sid')
+        })
+        .catch(errors => {
+            console.log(errors)
+        })
         }
     }
 
@@ -70,7 +86,7 @@ export default {
     object-fit: contain;
 }
 .navbar {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid blue;
   box-shadow: 5px 0px 10px;
 }
 </style>
